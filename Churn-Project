@@ -1,0 +1,84 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (
+    confusion_matrix, classification_report,
+    roc_curve, auc, precision_recall_curve
+)
+
+# 1. شبیه‌سازی داده‌های مشتریان ایرانسل
+# فرض می‌کنیم داده‌های ۲۰۰۰ مشتری با ۱۵ ویژگی مختلف (مثل مصرف دیتا، تماس با پشتیبانی و غیره) را داریم.
+X, y = make_classification(
+    n_samples=2000,
+    n_features=15,
+    n_informative=8,  # تعداد ویژگی‌های تأثیرگذار
+    n_redundant=3,    # تعداد ویژگی‌های تکراری
+    flip_y=0.05,      # افزودن مقداری نویز به داده‌ها برای واقعی‌تر شدن
+    random_state=42
+)
+
+# تعریف نام کلاس‌ها برای سناریوی ما
+# کلاس 0: مشتری وفادار (نمی‌رود)
+# کلاس 1: مشتری در حال ریزش (می‌رود)
+target_names = ["مشتری وفادار", "مشتری در حال ریزش"]
+
+# 2. تقسیم داده‌ها به مجموعه‌های آموزشی و آزمایشی
+# مدل را روی 70% داده‌ها آموزش می‌دهیم و روی 30% دیگر امتحان می‌کنیم.
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=100, stratify=y
+)
+
+# 3. ساخت و آموزش مدل رگرسیون لجستیک
+# مدل الگوهای رفتاری مشتریانی که ریزش کرده‌اند را یاد می‌گیرد.
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+
+# 4. پیش‌بینی وضعیت مشتریان در داده‌های آزمایشی
+y_pred = model.predict(X_test)
+y_proba = model.predict_proba(X_test)[:, 1] # استخراج احتمال ریزش کردن (کلاس ۱)
+
+# 5. ارزیابی عملکرد مدل
+# آیا مدل به خوبی مشتریان ناراضی را شناسایی می‌کند؟
+cm = confusion_matrix(y_test, y_pred)
+print("Confusion Matrix:\n", cm)
+print("\nClassification Report:\n", classification_report(y_test, y_pred, target_names=target_names))
+
+# 6. مصورسازی ماتریس درهم‌ریختگی (Confusion Matrix)
+plt.figure(figsize=(7, 5))
+sns.heatmap(
+    cm, annot=True, fmt="d", cmap="YlOrRd", # استفاده از یک نقشه رنگی متفاوت
+    xticklabels=target_names, yticklabels=target_names
+)
+plt.xlabel("وضعیت پیش‌بینی‌شده توسط مدل", fontname="Tahoma", fontsize=12)
+plt.ylabel("وضعیت واقعی مشتری", fontname="Tahoma", fontsize=12)
+plt.title("ماتریس درهم‌ریختگی برای پیش‌بینی ریزش مشتری", fontname="Tahoma", fontsize=14)
+plt.show()
+
+# 7. مصورسازی منحنی ROC
+# این نمودار قدرت کلی مدل در تفکیک مشتریان وفادار از مشتریان در حال ریزش را نشان می‌دهد.
+fpr, tpr, _ = roc_curve(y_test, y_proba)
+roc_auc = auc(fpr, tpr)
+
+plt.figure(figsize=(7, 5))
+plt.plot(fpr, tpr, color='darkred', lw=2, label=f"منحنی ROC (AUC = {roc_auc:.2f})")
+plt.plot([0, 1], [0, 1], linestyle="--", color="gray")
+plt.xlabel("نرخ مثبت کاذب (False Positive Rate)")
+plt.ylabel("نرخ مثبت واقعی (True Positive Rate)")
+plt.title("منحنی مشخصه عملکرد سیستم (ROC Curve)")
+plt.legend(loc="lower right")
+plt.show()
+
+# 8. مصورسازی منحنی Precision-Recall
+# این نمودار به ما نشان می‌دهد که چقدر می‌توانیم به پیش‌بینی‌های "ریزش" مدل اعتماد کنیم.
+prec, rec, _ = precision_recall_curve(y_test, y_proba)
+
+plt.figure(figsize=(7, 5))
+plt.plot(rec, prec, color='darkblue', lw=2, label="منحنی دقت-بازخوانی")
+plt.xlabel("بازخوانی (Recall)")
+plt.ylabel("دقت (Precision)")
+plt.title("منحنی دقت-بازخوانی (Precision-Recall Curve)")
+plt.legend(loc="lower left")
+plt.show()

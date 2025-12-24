@@ -1,1 +1,118 @@
-https://colab.research.google.com/drive/1dru8C4Kgezn-SVMBxOeVqSiD-SF_d0Iv?usp=sharing
+# https://colab.research.google.com/drive/1dru8C4Kgezn-SVMBxOeVqSiD-SF_d0Iv?usp=sharing
+
+# K-Nearest Neighbors (KNN) Classification on Car Evaluation Dataset (Colab-ready)
+
+
+# -----------------------------
+# 0. Install kaggle package (if needed)
+# -----------------------------
+!pip install -q kaggle
+!pip install -q seaborn
+
+# -----------------------------
+# 1. Upload kaggle.json API token
+# -----------------------------
+from google.colab import files
+files.upload()  # آپلود فایل kaggle.json
+
+# -----------------------------
+# 2. Set up Kaggle API
+# -----------------------------
+!mkdir -p ~/.kaggle
+!cp kaggle.json ~/.kaggle/
+!chmod 600 ~/.kaggle/kaggle.json
+
+# -----------------------------
+# 3. Download Car Evaluation Dataset from Kaggle
+# Dataset URL: https://www.kaggle.com/elikplim/car-evaluation
+# -----------------------------
+!kaggle datasets download -d elikplim/car-evaluation
+!unzip car-evaluation.zip -d data
+
+# -----------------------------
+# 4. Import libraries
+# -----------------------------
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# -----------------------------
+# 5. Load dataset
+# -----------------------------
+data = pd.read_csv("data/car.csv")  # فایل CSV داخل پوشه data
+
+# Separate features and target
+X = data.drop("class", axis=1)
+y = data["class"]
+
+# -----------------------------
+# 6. Encode categorical features
+# -----------------------------
+X_encoded = pd.get_dummies(X, columns=X.columns)
+
+le = LabelEncoder()
+y_encoded = le.fit_transform(y)
+
+# -----------------------------
+# 7. Split dataset
+# -----------------------------
+X_train, X_test, y_train, y_test = train_test_split(
+    X_encoded, y_encoded, test_size=0.2, random_state=42, stratify=y_encoded
+)
+
+# -----------------------------
+# 8. Feature scaling
+# -----------------------------
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# -----------------------------
+# 9. Train KNN
+# -----------------------------
+k = 5
+knn = KNeighborsClassifier(n_neighbors=k)
+knn.fit(X_train_scaled, y_train)
+
+# -----------------------------
+# 10. Predict & Evaluate
+# -----------------------------
+y_pred = knn.predict(X_test_scaled)
+
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy:.4f}")
+
+# Confusion matrix
+cm = confusion_matrix(y_test, y_pred)
+
+plt.figure(figsize=(6,5))
+sns.heatmap(cm, annot=True, fmt="d", cmap="Blues",
+            xticklabels=le.classes_, yticklabels=le.classes_)
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.title("Confusion Matrix - KNN on Car Evaluation")
+plt.show()
+
+# -----------------------------
+# 11. Accuracy vs k plot
+# -----------------------------
+accuracies = []
+k_values = range(1, 21)
+for k in k_values:
+    knn_temp = KNeighborsClassifier(n_neighbors=k)
+    knn_temp.fit(X_train_scaled, y_train)
+    y_temp = knn_temp.predict(X_test_scaled)
+    accuracies.append(accuracy_score(y_test, y_temp))
+
+plt.figure(figsize=(7,5))
+plt.plot(k_values, accuracies, marker='o')
+plt.xlabel("Number of Neighbors (k)")
+plt.ylabel("Accuracy")
+plt.title("KNN Accuracy vs k")
+plt.grid(True)
+plt.show()

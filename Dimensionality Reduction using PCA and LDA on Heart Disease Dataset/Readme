@@ -1,113 +1,70 @@
 # Dimensionality Reduction using PCA and LDA on Heart Disease Dataset
 
 ## Overview
-In medical and clinical datasets, a large number of features are often collected for each patient. While rich in information, high-dimensional data can introduce redundancy, noise, and increased computational complexity. Dimensionality reduction techniques address this challenge by projecting data into a lower-dimensional space while preserving meaningful patterns.
+High-dimensional datasets, especially in medical research, often contain redundant or correlated features, increasing computational complexity and making it harder to visualize or interpret the data. Dimensionality reduction methods such as **Principal Component Analysis (PCA)** and **Linear Discriminant Analysis (LDA)** are used to project such datasets into lower-dimensional spaces while preserving important information.
 
-This project applies and compares **Principal Component Analysis (PCA)** and **Linear Discriminant Analysis (LDA)** on the **Heart Disease dataset** to reduce the feature space to **two dimensions** and visualize the resulting representations.
+This project demonstrates the application of PCA and LDA on the **Heart Disease dataset**, reducing the data to two dimensions (PCA) and one discriminant component (LDA) for visualization and analysis.
 
 ---
 
-## Dataset Description
-The dataset used in this project is the **Heart Disease Dataset**, obtained from Kaggle. This dataset is widely used in machine learning research for binary classification tasks related to cardiovascular disease prediction.
+## Dataset
+- **Name:** Heart Disease Dataset  
+- **Source:** [Kaggle – Heart Disease UCI](https://www.kaggle.com/ronitf/heart-disease-uci)  
+- **Number of samples:** ~303  
+- **Number of features:** 13 numeric features  
+- **Classes:** 2 (Presence or absence of heart disease)  
+- **Target:** Last column (label)
 
-- Number of samples: ~300  
-- Number of features: 13  
-- Target variable: Presence or absence of heart disease  
-- Classes: 2 (Disease / No Disease)  
-- Data type: Numerical and categorical (encoded numerically)
-
-The last column of the dataset represents the class label, while all preceding columns are input features.
+> The dataset was downloaded from Kaggle. All features are numeric and scaled before applying PCA and LDA.
 
 ---
 
 ## Data Preprocessing
-Before applying dimensionality reduction techniques, the following preprocessing steps are performed:
+1. Separate features (`X`) and labels (`y`)  
+2. Standardize features using **StandardScaler** to ensure all features contribute equally  
+3. Prepare the data matrix for linear projections  
 
-- Separation of input features and class labels  
-- Feature scaling using **StandardScaler** to ensure all features contribute equally  
-- Conversion of the dataset into a numerical matrix suitable for linear projections  
-
-Feature scaling is particularly important for PCA, as it is sensitive to the scale of input variables.
+> Feature scaling is essential for PCA because it is sensitive to the scale of the features.
 
 ---
 
 ## Methods
 
 ### Principal Component Analysis (PCA)
-PCA is an **unsupervised** dimensionality reduction method that identifies orthogonal directions (principal components) along which the variance of the data is maximized. It does not use class label information and focuses solely on preserving the global structure of the data.
-
-In this project:
-- PCA is applied with `n_components = 2`
-- The data is projected onto the two most informative principal components
-- The resulting 2D representation is used for visualization
-
----
+- **Type:** Unsupervised  
+- **Goal:** Maximize variance  
+- **Components:** 2  
+- **Result:** 2D visualization of the dataset preserving overall variance
 
 ### Linear Discriminant Analysis (LDA)
-LDA is a **supervised** dimensionality reduction technique that incorporates class label information. It aims to maximize class separability by finding projection directions that increase the distance between classes while minimizing variance within each class.
+- **Type:** Supervised  
+- **Goal:** Maximize class separability  
+- **Components:** 1 (binary classification: `C-1`)  
+- **Result:** 1D projection highlighting class differences
 
-Since the Heart Disease dataset contains **two classes**, LDA can extract at most:
-\[
-C - 1 = 1
-\]
-discriminant component. However, the implementation allows visualization in a reduced subspace while highlighting class separation.
-
----
-
-## Results and Visualization
-- **PCA Visualization:**  
-  The PCA projection preserves the overall variance of the dataset but does not guarantee clear separation between patients with and without heart disease.
-
-- **LDA Visualization:**  
-  The LDA projection shows improved class separation due to the use of label information, making it more suitable for classification-oriented analysis.
-
-These results demonstrate the conceptual difference between variance-based and discrimination-based dimensionality reduction techniques.
+> Since the dataset has only two classes, LDA extracts one discriminant component, which is visualized as a single axis.
 
 ---
 
-## Project Structure
-
-PCA-LDA-Heart-Disease/
-│
-├── data/
-│ └── heart_disease.csv
-├── pca_lda_kaggle.py
-├── README.md
-└── requirements.txt
-
+## Implementation
+Python libraries used:
 
 ---
-
-## Requirements
-The following Python libraries are required to run this project:
-
-
-
-numpy
-pandas
-matplotlib
-scikit-learn
-
-
-## Install dependencies using:
-```bash
-pip install -r requirements.txt
 
 ## How to Run
 
-Place the Heart Disease dataset CSV file in the data directory and run:
+1. Clone the repository  
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
 
-python pca_lda_kaggle.py
+## Run the script:
 
+python pca_lda_heart_disease.py
 
-## The script will generate two visualizations:
-
-PCA 2D projection
-
-LDA projection highlighting class separability
+## Check the figures/ folder for saved plots
 
 ## Conclusion
-
-This project demonstrates the application of PCA and LDA for dimensionality reduction on a real-world medical dataset.
-PCA provides an unsupervised view of the data structure, while LDA leverages class labels to improve discrimination between healthy and diseased patients. 
-These techniques form a fundamental part of exploratory data analysis and preprocessing in machine learning pipelines.
+This project demonstrates PCA and LDA for dimensionality reduction on a real-world Kaggle dataset. 
+PCA provides an unsupervised view preserving overall data variance, while LDA leverages labels for class discrimination. 
+These visualizations aid in understanding dataset structure and can serve as a preprocessing step for machine learning models.

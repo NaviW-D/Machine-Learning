@@ -1,0 +1,98 @@
+# K-Nearest Neighbors (KNN) Classification on Car Evaluation Dataset
+
+## Overview
+This project demonstrates the application of the **K-Nearest Neighbors (KNN)** algorithm on the **Car Evaluation Dataset** from Kaggle. The dataset contains 1,728 car records with 7 features, aiming to predict the **overall evaluation** of a car based on its attributes. 
+
+KNN is a supervised learning algorithm that classifies a new sample based on the majority label of its nearest neighbors in the feature space.
+
+This Colab-ready version allows direct download of the dataset from Kaggle and execution of the entire pipeline in a single notebook.
+
+---
+
+## Dataset
+
+- **Source:** [Car Evaluation Dataset on Kaggle](https://www.kaggle.com/elikplim/car-evaluation)  
+- **Number of records:** 1,728  
+- **Features:** 7 (mix of categorical and discrete numeric-like features)  
+- **Target variable:** `class` (overall car evaluation) with 4 categories:  
+  - `unacc` (unacceptable)  
+  - `acc` (acceptable)  
+  - `good` (good)  
+  - `vgood` (very good)  
+
+### Feature Columns
+1. `buying` - Purchase price: `vhigh`, `high`, `med`, `low`  
+2. `maint` - Maintenance cost: `vhigh`, `high`, `med`, `low`  
+3. `doors` - Number of doors: `2`, `3`, `4`, `5more`  
+4. `persons` - Passenger capacity: `2`, `4`, `more`  
+5. `lug_boot` - Luggage boot size: `small`, `med`, `big`  
+6. `safety` - Safety rating: `low`, `med`, `high`  
+7. `class` - Target variable: `unacc`, `acc`, `good`, `vgood`  
+
+**Note:** Although `doors` and `persons` appear numeric, they are actually categorical and are encoded accordingly.
+
+---
+
+## Methodology
+
+1. **Data Preprocessing**
+   - One-hot encode all categorical features  
+   - Label encode the target variable  
+   - Split the dataset into training and testing sets (80%-20%)  
+   - Standardize features using `StandardScaler`  
+
+2. **KNN Classification**
+   - Train `KNeighborsClassifier` on the training set  
+   - Predict classes for the test set  
+
+3. **Evaluation**
+   - Calculate **accuracy** of the model  
+   - Generate **confusion matrix** for detailed performance analysis  
+   - Optional: Evaluate accuracy for different `k` values to find the optimal number of neighbors  
+
+---
+
+## Colab Usage
+
+1. Upload your `kaggle.json` API key to Colab  
+2. Run the script to automatically:
+   - Download the dataset from Kaggle  
+   - Preprocess the data  
+   - Train KNN  
+   - Display accuracy, confusion matrix, and accuracy vs k plot  
+
+---
+
+## Python Libraries
+
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+kaggle
+
+
+---
+
+## Project Structure
+
+
+
+Car-Evaluation-KNN/
+│
+├── data/ # Dataset will be downloaded here
+│ └── car.csv
+├── figures/ # Plots will be saved here
+├── knn_car_evaluation.py # Colab-ready Python script
+├── README.md # This file
+└── requirements.txt # Required packages
+
+
+---
+
+## Results
+
+- **Accuracy:** Varies depending on `k` value, typically above 90% for optimal k  
+- **Confusion Matrix:** Shows correct and incorrect predictions per class  
+- **Accuracy vs k plot:** Helps choose the best number of neighbors  

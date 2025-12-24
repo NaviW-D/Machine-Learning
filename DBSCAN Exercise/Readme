@@ -1,0 +1,69 @@
+# DBSCAN Clustering and Epsilon Selection
+
+## Overview
+This project demonstrates the **DBSCAN (Density-Based Spatial Clustering of Applications with Noise)** algorithm and explores **efficient methods for selecting the epsilon (ε) parameter**. DBSCAN is a density-based clustering algorithm that identifies **core points**, **border points**, and **noise points** based on density.
+
+Choosing an appropriate ε is crucial:
+- Too small → many points marked as noise  
+- Too large → clusters merge, losing structure  
+
+---
+
+## Efficient Methods for Epsilon Selection
+
+### Method 1: k-distance Plot
+- For each point, calculate the distance to its k-th nearest neighbor (k = min_samples).  
+- Sort distances and plot them.  
+- The **“elbow”** of the plot indicates the optimal ε.  
+
+### Method 2: Cluster and Noise Analysis
+- Run DBSCAN for several ε values.  
+- Record the number of clusters and noise points for each ε.  
+- Choose ε with the **most meaningful clusters and least noise**.  
+
+---
+
+## Python Implementation
+
+This example uses a **2D synthetic dataset**:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_moons
+from sklearn.cluster import DBSCAN
+from sklearn.neighbors import NearestNeighbors
+
+# 1. Generate synthetic dataset
+X, _ = make_moons(n_samples=300, noise=0.05, random_state=42)
+
+# 2. k-distance plot to select epsilon
+k = 4  # min_samples
+neighbors = NearestNeighbors(n_neighbors=k)
+neighbors_fit = neighbors.fit(X)
+distances, indices = neighbors_fit.kneighbors(X)
+
+distances = np.sort(distances[:, k-1])
+plt.figure(figsize=(6,4))
+plt.plot(distances)
+plt.xlabel("Points sorted by distance")
+plt.ylabel(f"{k}-th nearest neighbor distance")
+plt.title("k-distance plot for DBSCAN")
+plt.grid(True)
+plt.show()
+
+# From the plot, ε ~ 0.15 is a reasonable choice
+
+# 3. Apply DBSCAN
+epsilon = 0.15
+min_samples = 4
+dbscan = DBSCAN(eps=epsilon, min_samples=min_samples)
+labels = dbscan.fit_predict(X)
+
+# 4. Visualize clusters
+plt.figure(figsize=(6,5))
+plt.scatter(X[:,0], X[:,1], c=labels, cmap='Paired', s=50)
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.title(f"DBSCAN clustering (ε={epsilon}, min_samples={min_samples})")
+plt.show()

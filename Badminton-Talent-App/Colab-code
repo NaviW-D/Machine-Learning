@@ -1,0 +1,62 @@
+"""
+Badminton Talent Prediction - Text-Based (Stage 1)
+Load CSV from Google Drive
+Author: Navid
+"""
+
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from google.colab import drive
+
+# -----------------------------
+# 1. اتصال به Google Drive
+# -----------------------------
+drive.mount('/content/drive')
+
+# مسیر فایل CSV روی Drive (مثال)
+csv_path = '/content/drive/MyDrive/Badminton/user_text_data.csv'
+
+# -----------------------------
+# 2. بارگذاری داده از CSV
+# -----------------------------
+data = pd.read_csv(csv_path)
+
+# اگر ستون خروجی نداریم، اضافه کنیم
+data['recommended_sport'] = 1  # Badminton
+
+print("Sample User Data:")
+print(data.head())
+print("\n")
+
+# -----------------------------
+# 3. آماده سازی ویژگی‌ها و برچسب‌ها
+# -----------------------------
+X = data[['age', 'height_cm', 'weight_kg', 'experience_years', 'interest_level']]
+y = data['recommended_sport']
+
+# استانداردسازی داده‌ها
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# -----------------------------
+# 4. ساخت مدل KNN
+# -----------------------------
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(X_scaled, y)
+
+# -----------------------------
+# 5. پیش‌بینی رشته ورزشی برای نمونه جدید
+# -----------------------------
+new_user = pd.DataFrame({
+    'age':[15],
+    'height_cm':[162],
+    'weight_kg':[53],
+    'experience_years':[1],
+    'interest_level':[5]
+})
+
+new_user_scaled = scaler.transform(new_user)
+prediction = knn.predict(new_user_scaled)
+
+print("Predicted Sport for new user:", "Badminton" if prediction[0]==1 else "Other")

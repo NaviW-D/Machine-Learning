@@ -68,4 +68,46 @@ This comparison highlights the fundamental difference between variance-based and
 ---
 
 ## Project Structure
+PCA-LDA-Dimensionality-Reduction/
+│
+├── pca_lda_visualization.py
+├── README.md
+├── requirements.txt
+└── figures/
+├── pca_plot.png
+└── lda_plot.png
+
+
+---
+
+## Requirements
+The required Python libraries are listed below:
+
+
+
+numpy
+matplotlib
+scikit-learn
+
+
+Install dependencies using:
+```bash
+pip install -r requirements.txt
+
+- How to Run
+
+Run the following command to execute the script:
+
+python pca_lda_visualization.py
+
+
+- The script will display two figures:
+
+PCA 2D projection
+
+LDA 2D projection
+
+- Conclusion
+
+This project provides a clear comparison between PCA and LDA for dimensionality reduction and visualization. While PCA focuses on preserving data variance without considering class labels, LDA explicitly aims to improve class separability. Both techniques are fundamental tools in machine learning and serve as building blocks for more advanced methods.
 

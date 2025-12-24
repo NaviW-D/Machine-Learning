@@ -90,24 +90,23 @@ matplotlib
 scikit-learn
 
 
-Install dependencies using:
+## Install dependencies using:
 ```bash
 pip install -r requirements.txt
 
-- How to Run
+## How to Run
 
 Run the following command to execute the script:
 
 python pca_lda_visualization.py
 
 
-- The script will display two figures:
+## The script will display two figures:
 
 PCA 2D projection
 
 LDA 2D projection
-
-- Conclusion
+# Conclusion
 
 This project provides a clear comparison between PCA and LDA for dimensionality reduction and visualization. While PCA focuses on preserving data variance without considering class labels, LDA explicitly aims to improve class separability. Both techniques are fundamental tools in machine learning and serve as building blocks for more advanced methods.
 

@@ -115,3 +115,4 @@ This project provides a clear comparison between PCA and LDA for dimensionality 
 While PCA focuses on preserving data variance without considering class labels, LDA explicitly aims to improve class separability.
 Both techniques are fundamental tools in machine learning and serve as building blocks for more advanced methods.
 
+### Colab => https://colab.research.google.com/drive/1dru8C4Kgezn-SVMBxOeVqSiD-SF_d0Iv?usp=sharing

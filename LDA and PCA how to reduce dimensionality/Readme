@@ -1,0 +1,71 @@
+# Dimensionality Reduction using PCA and LDA
+
+## Overview
+In many machine learning problems, datasets contain a large number of features, which can lead to increased computational cost, redundancy, and noise. Dimensionality reduction techniques aim to project high-dimensional data into a lower-dimensional space while preserving the most relevant information.  
+
+This project demonstrates and compares two widely used linear dimensionality reduction methods:
+- Principal Component Analysis (PCA)
+- Linear Discriminant Analysis (LDA)
+
+Both methods are applied to a labeled dataset, and the data is reduced to **two dimensions** to enable clear visualization and comparison.
+
+---
+
+## Dataset
+The **Iris dataset** is used in this project. It is a well-known benchmark dataset in machine learning and pattern recognition.
+
+- Number of samples: 150  
+- Number of features: 4  
+- Number of classes: 3  
+- Source: scikit-learn built-in datasets  
+
+---
+
+## Methods
+
+### Principal Component Analysis (PCA)
+PCA is an **unsupervised** dimensionality reduction technique that focuses on preserving the maximum variance of the data. It works by identifying new orthogonal axes (principal components) along which the data variance is maximized. PCA does not use class label information and relies solely on the statistical structure of the features.
+
+Main characteristics of PCA:
+- Unsupervised method  
+- Maximizes variance  
+- Sensitive to feature scaling  
+- Commonly used for visualization, noise reduction, and feature compression  
+
+---
+
+### Linear Discriminant Analysis (LDA)
+LDA is a **supervised** dimensionality reduction technique that uses class label information to maximize class separability. It finds projection directions that maximize the ratio of between-class scatter to within-class scatter.  
+
+The maximum number of components that LDA can produce is limited to:
+\[
+C - 1
+\]
+where \(C\) is the number of classes.
+
+Main characteristics of LDA:
+- Supervised method  
+- Maximizes class separation  
+- Effective for classification tasks  
+- Produces at most \(C - 1\) components  
+
+---
+
+## Implementation Details
+- Feature scaling is performed using **StandardScaler**
+- PCA is applied with `n_components = 2`
+- LDA is applied with `n_components = 2`
+- Results are visualized using 2D scatter plots
+
+---
+
+## Results
+- PCA preserves the overall structure and variance of the data but may not clearly separate different classes.
+- LDA provides better class separation due to the use of label information.
+
+This comparison highlights the fundamental difference between variance-based and discrimination-based dimensionality reduction techniques.
+
+---
+
+## Project Structure
+

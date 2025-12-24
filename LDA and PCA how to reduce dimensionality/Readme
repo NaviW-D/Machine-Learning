@@ -1,7 +1,8 @@
 # Dimensionality Reduction using PCA and LDA
 
 ## Overview
-In many machine learning problems, datasets contain a large number of features, which can lead to increased computational cost, redundancy, and noise. Dimensionality reduction techniques aim to project high-dimensional data into a lower-dimensional space while preserving the most relevant information.  
+In many machine learning problems, datasets contain a large number of features, which can lead to increased computational cost,redundancy, and noise. 
+Dimensionality reduction techniques aim to project high-dimensional data into a lower-dimensional space while preserving the most relevant information.  
 
 This project demonstrates and compares two widely used linear dimensionality reduction methods:
 - Principal Component Analysis (PCA)
@@ -24,7 +25,8 @@ The **Iris dataset** is used in this project. It is a well-known benchmark datas
 ## Methods
 
 ### Principal Component Analysis (PCA)
-PCA is an **unsupervised** dimensionality reduction technique that focuses on preserving the maximum variance of the data. It works by identifying new orthogonal axes (principal components) along which the data variance is maximized. PCA does not use class label information and relies solely on the statistical structure of the features.
+PCA is an **unsupervised** dimensionality reduction technique that focuses on preserving the maximum variance of the data. 
+It works by identifying new orthogonal axes (principal components) along which the data variance is maximized. PCA does not use class label information and relies solely on the statistical structure of the features.
 
 Main characteristics of PCA:
 - Unsupervised method  
@@ -35,7 +37,8 @@ Main characteristics of PCA:
 ---
 
 ### Linear Discriminant Analysis (LDA)
-LDA is a **supervised** dimensionality reduction technique that uses class label information to maximize class separability. It finds projection directions that maximize the ratio of between-class scatter to within-class scatter.  
+LDA is a **supervised** dimensionality reduction technique that uses class label information to maximize class separability. 
+It finds projection directions that maximize the ratio of between-class scatter to within-class scatter.  
 
 The maximum number of components that LDA can produce is limited to:
 \[
@@ -108,5 +111,7 @@ PCA 2D projection
 LDA 2D projection
 # Conclusion
 
-This project provides a clear comparison between PCA and LDA for dimensionality reduction and visualization. While PCA focuses on preserving data variance without considering class labels, LDA explicitly aims to improve class separability. Both techniques are fundamental tools in machine learning and serve as building blocks for more advanced methods.
+This project provides a clear comparison between PCA and LDA for dimensionality reduction and visualization.
+While PCA focuses on preserving data variance without considering class labels, LDA explicitly aims to improve class separability.
+Both techniques are fundamental tools in machine learning and serve as building blocks for more advanced methods.
 

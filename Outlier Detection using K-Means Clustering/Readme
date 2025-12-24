@@ -1,0 +1,48 @@
+# Outlier Detection using K-Means Clustering
+
+## Overview
+High-dimensional datasets often contain **outliers**, which are samples that significantly deviate from the general pattern of the data. Outliers can negatively affect clustering algorithms such as **K-Means**, leading to inaccurate cluster centroids and poor data representation. Identifying and handling outliers is therefore a critical preprocessing step in data analysis.
+
+This project demonstrates the use of **K-Means clustering** to detect outliers in a dataset by measuring the distance of each point from its assigned cluster centroid.
+
+---
+
+## Dataset
+- **Source:** Kaggle or GitHub (replace with your dataset link)  
+- **Features:** Numeric features suitable for clustering  
+- **Preprocessing:** Standardization using `StandardScaler` is applied to ensure all features contribute equally to distance calculations.
+
+---
+
+## Methodology
+
+### K-Means Clustering
+- K-Means partitions data into **K clusters** by minimizing the within-cluster sum of squares (distance from centroid).  
+- Each data point is assigned to the nearest centroid.
+
+### Outlier Detection
+Outliers are identified based on the **distance of a point from its assigned centroid**:
+
+1. **Compute distance:** Euclidean distance between each data point and its cluster centroid.
+2. **Determine threshold:** Points with distance greater than `mean + 2*std` (mean plus two standard deviations) are considered outliers.
+3. **Alternative methods:**  
+   - Using **Silhouette Score** to identify poorly clustered points.  
+   - Applying **Z-score** or **IQR** on distances for statistical detection.  
+
+### Visualization
+- Scatter plots can highlight clusters and mark outliers in a distinct color.  
+- This helps in understanding cluster structure and the location of outliers.
+
+---
+
+## Implementation Steps
+1. Load dataset from `data/` folder.  
+2. Standardize features using `StandardScaler`.  
+3. Apply K-Means clustering to partition data.  
+4. Calculate the distance of each point to its assigned centroid.  
+5. Identify outliers using the threshold (`mean + 2*std`).  
+6. Visualize clusters and outliers using `matplotlib`.  
+
+---
+
+## Python Libraries

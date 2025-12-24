@@ -1,0 +1,26 @@
+# Badminton Talent App - Text-Based Prediction
+
+## Overview
+This project predicts the recommended sport for users based on **textual input data** (age, height, weight, experience, and interest). 
+Currently, the focus is on **Badminton**.
+
+## Data
+The CSV file (`data/user_text_data.csv`) contains sample user information:
+
+| name | age | height_cm | weight_kg | experience_years | interest_level |
+|------|-----|-----------|-----------|-----------------|----------------|
+
+## How it Works
+1. Load user data from CSV
+2. Standardize features
+3. Train a KNN model
+4. Predict the recommended sport for new users
+
+## Run in Google Colab
+1. Upload the project folder to Google Drive
+2. Open Colab and mount Drive
+3. Run `text_model.py` or paste the code into a Colab cell
+
+## Requirements
+pandas
+scikit-learn

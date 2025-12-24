@@ -1,7 +1,9 @@
 # Outlier Detection using K-Means Clustering
 
 ## Overview
-High-dimensional datasets often contain **outliers**, which are samples that significantly deviate from the general pattern of the data. Outliers can negatively affect clustering algorithms such as **K-Means**, leading to inaccurate cluster centroids and poor data representation. Identifying and handling outliers is therefore a critical preprocessing step in data analysis.
+High-dimensional datasets often contain **outliers**, which are samples that significantly deviate from the general pattern of the data. 
+Outliers can negatively affect clustering algorithms such as **K-Means**, leading to inaccurate cluster centroids and poor data representation. 
+Identifying and handling outliers is therefore a critical preprocessing step in data analysis.
 
 This project demonstrates the use of **K-Means clustering** to detect outliers in a dataset by measuring the distance of each point from its assigned cluster centroid.
 
@@ -46,3 +48,34 @@ Outliers are identified based on the **distance of a point from its assigned cen
 ---
 
 ## Python Libraries
+numpy
+pandas
+matplotlib
+scikit-learn
+
+
+---
+
+## Project Structure
+
+
+KMeans-Outlier-Detection/
+│
+├── data/
+│ └── dataset.csv
+├── figures/
+│ ├── clusters.png
+│ └── outliers.png
+├── kmeans_outlier_detection.py
+├── README.md
+└── requirements.txt
+
+
+---
+
+## Conclusion
+This project illustrates how **K-Means clustering** can be leveraged to detect outliers in a dataset. 
+Identifying outliers helps improve clustering accuracy and ensures that the dataset's underlying structure is accurately represented. 
+Visualization of clusters with highlighted outliers provides an intuitive understanding of data distribution and potential anomalies.
+
+---

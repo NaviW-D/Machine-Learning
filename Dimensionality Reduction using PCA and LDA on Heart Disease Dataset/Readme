@@ -68,3 +68,5 @@ python pca_lda_heart_disease.py
 This project demonstrates PCA and LDA for dimensionality reduction on a real-world Kaggle dataset. 
 PCA provides an unsupervised view preserving overall data variance, while LDA leverages labels for class discrimination. 
 These visualizations aid in understanding dataset structure and can serve as a preprocessing step for machine learning models.
+
+### Colab => https://colab.research.google.com/drive/1dru8C4Kgezn-SVMBxOeVqSiD-SF_d0Iv?usp=sharing
